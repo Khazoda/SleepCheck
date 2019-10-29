@@ -46,7 +46,7 @@ public class SleepCheck extends JavaPlugin implements Listener {
         if (command.getName().equalsIgnoreCase(("sleep"))) {
             if (currentVote!= null) { //if there is a current vote ongoing
                 if (sender instanceof Player) {
-                    if((Player) sender == currentVote.instigator) {
+                    if(sender == currentVote.instigator) {
                         sender.sendMessage(ChatColor.GOLD + "You are the instigator, your vote is automatically a yes");
                     } else {
                         currentVote.addSleeper((Player) sender);
@@ -62,10 +62,10 @@ public class SleepCheck extends JavaPlugin implements Listener {
             return true;
         }
 
-        if (command.getName().equalsIgnoreCase(("dontsleep"))) {
+        if (command.getName().equalsIgnoreCase(("nosleep"))) {
             if(currentVote!= null) {
                 if (sender instanceof Player) {
-                    if((Player) sender == currentVote.instigator) {
+                    if(sender == currentVote.instigator) {
                         sender.sendMessage(ChatColor.GOLD + "You are the instigator, your vote is automatically a yes");
                     } else {
                         currentVote.instigator.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20, 1)); //kicks instigator out of bed

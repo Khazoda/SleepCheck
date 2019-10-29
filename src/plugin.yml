@@ -10,9 +10,9 @@ commands:
       aliases: [sc]
   sleep:
       description: Vote to sleep
-      usage: /sleep or /y
-      aliases: [y]
-  dontsleep:
+      usage: /sleep or /skip
+      aliases: [skip]
+  nosleep:
       description: Stop a sleep vote
-      usage: /nosleep /n
-      aliases: [n]
+      usage: /nosleep /noskip
+      aliases: [noskip]

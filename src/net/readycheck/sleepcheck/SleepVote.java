@@ -2,7 +2,6 @@ package net.readycheck.sleepcheck;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -40,17 +39,13 @@ public class SleepVote {
                 players.add(p);
                 wakers.add(p);
                 p.sendMessage(ChatColor.GOLD + instigator.getDisplayName() + " is sleeping. Skip the night?");
-                p.sendMessage(ChatColor.GRAY + "(" + ChatColor.GREEN + "/y " + ChatColor.RED + "/n" + ChatColor.GRAY +")");
+                p.sendMessage(ChatColor.GRAY + "(" + ChatColor.GREEN + "/sleep " + ChatColor.RED + "/nosleep" + ChatColor.GRAY +")");
             }
         }
     }
 
     public boolean InstigatorWake(Player p) {
-        if(p == instigator) {
-            return true;
-        } else {
-            return false;
-        }
+        return p == instigator;
     }
 
     public void addSleeper(Player p) {
