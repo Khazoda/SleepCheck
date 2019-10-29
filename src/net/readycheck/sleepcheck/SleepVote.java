@@ -66,7 +66,6 @@ public class SleepVote {
 
     public void checkToSkip(Player instigator){
         float interval = 50;
-        float currentTime = instigator.getWorld().getTime();
 
         if(getPercentSleeping() >= 50f) {
             this.votePassed = true;
@@ -75,7 +74,7 @@ public class SleepVote {
                 float temptime;
                 @Override
                 public void run() {
-                    temptime = currentTime;
+                    temptime = instigator.getWorld().getTime();
                     if(temptime < 1000) {
                         this.cancel();
                     }
