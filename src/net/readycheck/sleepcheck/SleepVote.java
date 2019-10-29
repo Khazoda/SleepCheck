@@ -2,14 +2,20 @@ package net.readycheck.sleepcheck;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SleepVote {
 
+    private final JavaPlugin plugin;
+    Server server;
     Player instigator; //Person who slept and began sleep vote
     List<Player> players; //List of all players excl instigator
     List<Player> sleepers; //List of all sleeping/sleep voting players incl instigator
@@ -17,7 +23,9 @@ public class SleepVote {
     //Wakers list and sleepers list together should create players list.
     boolean votePassed;
 
-    public SleepVote(Player instigator) {
+    public SleepVote(Player instigator,JavaPlugin plugin) {
+        this.plugin = plugin;
+        this.server = plugin.getServer();
         this.instigator = instigator;
 
         players = new ArrayList();
@@ -61,23 +69,27 @@ public class SleepVote {
         return sleepPerc;
     }
 
-    public void checkToSkip(Player instigator) throws InterruptedException {
-        float interval = 100;
-        float morning = 24000;
+    public void checkToSkip(Player instigator){
+        float interval = 50;
         float currentTime = instigator.getWorld().getTime();
-        float difference = morning - currentTime;
-        float incrementer = difference/interval;
-        float temp;
 
         if(getPercentSleeping() >= 50f) {
-            Util.broadcastMsg(ChatColor.YELLOW + "\nSleep vote passed... good morning everyone!");
             this.votePassed = true;
-            for(float i = 0; i < incrementer; i++) {
-                temp = instigator.getWorld().getTime();
-                instigator.getWorld().setTime((long)(temp+interval));
-                Thread.sleep((long)20);
-            }
+
+            new BukkitRunnable() {
+                float temptime;
+                @Override
+                public void run() {
+                    temptime = currentTime;
+                    if(temptime < 1000) {
+                        this.cancel();
+                    }
+                    instigator.getWorld().setTime((long) (temptime + interval));
+                }
+            }.runTaskTimer(plugin,0,1);
+            Util.broadcastMsg(ChatColor.YELLOW + "\nGood Morning!");
         }
+
     }
 
     public void printVote(CommandSender sender) {

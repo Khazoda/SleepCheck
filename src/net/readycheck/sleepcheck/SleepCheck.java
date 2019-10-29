@@ -21,6 +21,7 @@ public class SleepCheck extends JavaPlugin implements Listener {
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
         Bukkit.broadcastMessage(ChatColor.BLUE + "SleepCheck V 1.0 ©JuneFaleiro loaded successfully.");
+
     }
     @Override
     public void onDisable() {
@@ -51,11 +52,7 @@ public class SleepCheck extends JavaPlugin implements Listener {
                         currentVote.addSleeper((Player) sender);
                         sender.sendMessage(ChatColor.GREEN + "You voted to sleep");
                         Util.broadcastMsg((Player) sender,ChatColor.DARK_GREEN + ((Player) sender).getDisplayName() + " voted to sleep (" + currentVote.getPercentSleeping() + "%)");
-                        try {
                             currentVote.checkToSkip(currentVote.instigator);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
                     }
                 }
             } else {
@@ -92,7 +89,7 @@ public class SleepCheck extends JavaPlugin implements Listener {
         if(event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK) {
             Player p = event.getPlayer();
             if(currentVote == null) {
-                currentVote = new SleepVote(p);
+                currentVote = new SleepVote(p,this);
                 currentVote.checkToSkip(p);
             } else {
                 currentVote.addSleeper(p);
