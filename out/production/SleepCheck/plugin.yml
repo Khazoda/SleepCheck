@@ -1,0 +1,18 @@
+main: net.readycheck.sleepcheck.SleepCheck
+name: SleepCheck
+version: 1.0
+author: June Faleiro
+description: Sleep Voting Plugin
+commands:
+  sleepcheck:
+      description: Shows current sleep vote info
+      usage: /sleepcheck
+      aliases: [sc]
+  sleep:
+      description: Vote to sleep
+      usage: /sleep or /y
+      aliases: [y]
+  dontsleep:
+      description: Stop a sleep vote
+      usage: /nosleep /n
+      aliases: [n]
